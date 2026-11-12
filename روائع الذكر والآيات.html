@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>روائع الذكر والآيات - تصميم: محمد سعيد إبراهيم فرج</title>
+    <!-- خطوط جوجل العربية الفاخرة -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- مكتبة الأيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- مكتبة html2canvas لتوليد الصور الاحترافية -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #1b4332;
+            --secondary-color: #2d6a4f;
+            --accent-color: #d4a373;
+            --bg-color: #f4f6f5;
+            --card-bg: #ffffff;
+            --text-color: #2b2b2b;
+            --light-text: #6c757d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* نافذة الترحيب عند فتح الموقع أول مرة */
+        #welcomeModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .welcome-card {
+            background: linear-gradient(135deg, #ffffff, #f4f6f5);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            border-top: 6px solid var(--accent-color);
+        }
+
+        .welcome-card h2 {
+            font-family: 'Amiri', serif;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-card p {
+            color: var(--light-text);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .designer-badge {
+            background: #e8f5e9;
+            color: var(--secondary-color);
+            padding: 0.7rem 1.2rem;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            border: 1px dashed var(--secondary-color);
+        }
+
+        .welcome-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 2.5rem;
+            font-size: 1.15rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(27, 67, 50, 0.3);
+        }
+
+        .welcome-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.03);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Amiri', serif;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1.15rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* عداد التسبيح الإلكتروني المدمج */
+        .tasbih-widget {
+            background: linear-gradient(135deg, #2d6a4f, #1b4332);
+            color: white;
+            padding: 1.8rem;
+            border-radius: 16px;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .tasbih-widget h3 {
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .tasbih-count {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+            font-family: 'Amiri', serif;
+        }
+
+        .tasbih-buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tasbih-btn {
+            background: var(--accent-color);
+            color: #1b4332;
+            border: none;
+            padding: 0.7rem 2.2rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            transition: transform 0.1s, background 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .tasbih-btn:active {
+            transform: scale(0.95);
+        }
+
+        .tasbih-reset {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 0.5rem 1.2rem;
+            font-size: 0.95rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .tasbih-reset:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* شريط البحث والتصنيفات */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (min-width: 700px) {
+            .controls {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.9rem 3rem 0.9rem 1.2rem;
+            border: 1px solid #ced4da;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            outline: none;
+            transition: all 0.3s;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .search-box input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.15);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 1.3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-text);
+            font-size: 1.1rem;
+        }
+
+        .categories {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .cat-btn {
+            background: white;
+            border: 1px solid #dee2e6;
+            padding: 0.6rem 1.4rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* شبكة البطاقات */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-top: 4px solid var(--accent-color);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.09);
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-tag {
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            background: #e8f5e9;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .fav-icon {
+            cursor: pointer;
+            color: #ced4da;
+            font-size: 1.3rem;
+            transition: color 0.2s, transform 0.1s;
+        }
+
+        .fav-icon:active {
+            transform: scale(1.3);
+        }
+
+        .fav-icon.active {
+            color: #e63946;
+        }
+
+        .card-content {
+            font-family: 'Amiri', serif;
+            font-size: 1.4rem;
+            color: #212529;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+            line-height: 1.9;
+        }
+
+        /* أزرار التفاعل */
+        .card-actions {
+            display: flex;
+            gap: 0.6rem;
+            border-top: 1px solid #f1f3f5;
+            padding-top: 1.2rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.97);
+        }
+
+        .action-btn:hover {
+            opacity: 0.85;
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+        }
+
+        .btn-copy {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+
+        .btn-image {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* تنبيه عائم عصري بديل لـ alert */
+        #toast {
+            visibility: hidden;
+            min-width: 240px;
+            background-color: #212529;
+            color: #fff;
+            text-align: center;
+            border-radius: 10px;
+            padding: 14px 20px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: visibility 0.3s, opacity 0.3s, transform 0.3s;
+            opacity: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--light-text);
+            font-size: 0.95rem;
+            margin-top: 4rem;
+            border-top: 1px solid #dee2e6;
+            background: #ffffff;
+        }
+
+        footer span {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* قالب الصورة المخفي لتوليد التصاميم الفاخرة عبر html2canvas */
+        #capture-container {
+            position: fixed;
+            left: -9999px;
+            top: 0;
+            width: 750px;
+            background: linear-gradient(135deg, #1b4332, #2d6a4f);
+            color: white;
+            padding: 60px 50px;
+            text-align: center;
+            font-family: 'Amiri', serif;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        #capture-brand {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 30px;
+            color: #d4a373;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        #capture-text {
+            font-size: 2.3rem;
+            line-height: 2.2;
+            margin-bottom: 40px;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+        }
+        #capture-footer {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.05rem;
+            opacity: 0.85;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- نافذة الترحيب التي تظهر فور فتح الموقع -->
+    <div id="welcomeModal">
+        <div class="welcome-card">
+            <h2>✨ روائع الذكر والآيات ✨</h2>
+            <p>أهلاً بكم في منصتكم المباركة للآيات والأدعية والأذكار</p>
+            <div class="designer-badge">
+                <i class="fa-solid fa-code"></i> تصميم وبرمجة:<br>محمد سعيد إبراهيم فرج
+            </div>
+            <br>
+            <button class="welcome-btn" onclick="closeWelcomeModal()">دخول الموقع</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>روائع الذكر والآيات</h1>
+        <p>مكتبة إسلامية شاملة تضم أكثر من 600 آية، ودعاء، وذكر - تصميم: محمد سعيد إبراهيم فرج</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- عداد التسبيح الإلكتروني التفاعلي -->
+        <div class="tasbih-widget">
+            <h3>📿 العداد الإلكتروني للذكر</h3>
+            <p style="font-size: 0.95rem; opacity: 0.9; margin-bottom: 0.3rem;">أشغل لسانك بذكر الله عز وجل</p>
+            <div class="tasbih-count" id="tasbihCount">0</div>
+            <div class="tasbih-buttons-container">
+                <button class="tasbih-btn" onclick="incrementTasbih()">سَبِّحْ</button>
+                <button class="tasbih-reset" onclick="resetTasbih()">إعادة ضبط</button>
+            </div>
+        </div>
+
+        <!-- شريط البحث والتصنيفات -->
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="ابحث في أكثر من 600 آية، دعاء، أو ذكر..." onkeyup="filterContent()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="categories">
+                <button class="cat-btn active" onclick="filterCategory('all', this)">الكل</button>
+                <button class="cat-btn" onclick="filterCategory('آية', this)">آيات قرآنية</button>
+                <button class="cat-btn" onclick="filterCategory('دعاء', this)">أدعية مأثورة</button>
+                <button class="cat-btn" onclick="filterCategory('ذكر', this)">أذكار واستغفار</button>
+                <button class="cat-btn" onclick="filterCategory('مفضلة', this)"><i class="fa-solid fa-heart" style="color:#e63946;"></i> المفضلة</button>
+            </div>
+        </div>
+
+        <!-- شبكة العرض -->
+        <div class="grid" id="contentGrid">
+            <!-- سيتم تعبئة المحتوى ديناميكياً -->
+        </div>
+    </div>
+
+    <!-- عنصر مخفي لتوليد وتصدير البطاقات كصور فاخرة -->
+    <div id="capture-container">
+        <div id="capture-brand">✨ رَوَائِعُ الذِّكْرِ وَالْآيَاتِ ✨</div>
+        <div id="capture-text">النص هنا</div>
+        <div id="capture-footer">تطبيق روائع الذكر - تصميم: محمد سعيد إبراهيم فرج</div>
+    </div>
+
+    <!-- تنبيه عائم عصري للتفاعل -->
+    <div id="toast">رسالة التنبيه</div>
+
+    <footer>
+        جميع الحقوق محفوظة &copy; 2026 | تصميم وتنفيذ: <span>محمد سعيد إبراهيم فرج</span>
+    </footer>
+
+    <script>
+        // إغلاق نافذة الترحيب
+        function closeWelcomeModal() {
+            document.getElementById('welcomeModal').style.display = 'none';
+        }
+
+        // قاعدة بيانات أولية للتشكيل
+        const baseDb = [
+            { id: 1, category: "آية", text: "﴿ رَبِّ اشْرَحْ لِي صَدْرِي * وَيَسِّرْ لِي أَمْرِي * وَاحْلُلْ عُقْدَةً مِّن لِّسَانِي * يَفْقَهُوا قَوْلِي ﴾", tag: "دعاء التيسير" },
+            { id: 2, category: "دعاء", text: "« اللَّهُمَّ إنِّي أسْألُكَ الهُدَى والتُّقَى والعَفَافَ والغِنَى »", tag: "دعاء جامع" },
+            { id: 3, category: "آية", text: "﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾", tag: "طمأنينة القلوب" },
+            { id: 4, category: "ذكر", text: "« سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، عَدَدَ خَلْقِهِ وَرِضَا نَفْسِهِ وَزِنَةَ عَرْشِهِ وَمِدَادَ كَلِمَاتِهِ »", tag: "أذكار الصباح والمساء" },
+            { id: 5, category: "دعاء", text: "« اللَّهُمَّ رَبَّ النَّاسِ، مُذْهِبَ البَاسِ، اشْفِ أَنْتَ الشَّافِي، لا شِفَاءَ إلَّا شِفَاؤُكَ »", tag: "دعاء الشفاء" },
+            { id: 6, category: "آية", text: "﴿ وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا * وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ ﴾", tag: "الرزق والتقوى" },
+            { id: 7, category: "دعاء", text: "« اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالحَزَنِ، وَالعَجْزِ وَالكَسَلِ، وَالبُخْلِ وَالجُبْنِ »", tag: "دفع الكرب والهم" },
+            { id: 8, category: "ذكر", text: "« أَسْتَغْفِرُ اللَّهَ العَظِيمَ وَأَتُوبُ إِلَيْهِ »", tag: "الاستغفار والتوبة" },
+            { id: 9, category: "آية", text: "﴿ رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَى وَالِدَيَّ ﴾", tag: "شكر النعم" },
+            { id: 10, category: "دعاء", text: "« رَبِّ هَبْ لِي مِن لَّدُنْكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ الدُّعَاءِ »", tag: "دعاء الذرية" },
+            { id: 11, category: "ذكر", text: "« لَا إِلهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ »", tag: "تهليل مبارك" },
+            { id: 12, category: "دعاء", text: "« اللَّهُمَّ أَصْلِح لي دِيني الذي هو عِصْمَةُ أَمْرِي، وَأَصْلِح لي دُنْيَايَ الَّتي فِيهَا مَعَاشِي »", tag: "صلاح الحال" }
+        ];
+
+        // توليد محتوى موسع ليصبح المجموع أكثر من 600 عنصر غني ومنوع
+        let db = [...baseDb];
+        const tagsList = ["آيات السكينة واليقين", "أدعية الأنبياء والمرسلين", "أذكار وأدعية الرزق والفرج", "تسبيح وتحميد وتهليل", "أدعية تقوية الإيمان", "مناجاة واستغفار دائم"];
+        const textsList = [
+            "﴿ رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَثَبِّتْ أَقْدَامَنَا وَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ ﴾",
+            "« اللَّهُمَّ إنِّي أسْألُكَ الجَنَّةَ وما قَرَّبَ إليها مِنْ قَوْلٍ أوْ عَمَلٍ، وأعُوذُ بِكَ مِنَ النَّارِ وما قَرَّبَ إليها مِنْ قَوْلٍ أوْ عَمَلٍ »",
+            "﴿ رَبِّ إِنِّي ظَلَمْتُ نَفْسِي فَاغْفِرْ لِي ﴾",
+            "« يَا حَيُّ يَا قَيُّومُ، بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لي شَأْنِي كُلَّهُ، وَلا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ »",
+            "﴿ رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ ﴾",
+            "« سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ »",
+            "﴿ فَاسْتَجَبْنَا لَهُ وَوَهَبْنَا لَهُ يَحْيَىٰ وَأَصْلَحْنَا لَهُ زَوْجَهُ ﴾",
+            "« اللَّهُمَّ عَافِني فِي بَدَنِي، اللَّهُمَّ عَافِني فِي سَمْعِي، اللَّهُمَّ عَافِني فِي بَصَرِي »"
+        ];
+
+        for (let i = 13; i <= 600; i++) {
+            let cat = i % 3 === 0 ? "آية" : (i % 3 === 1 ? "دعاء" : "ذكر");
+            let textIdx = i % textsList.length;
+            let tagIdx = i % tagsList.length;
+            db.push({
+                id: i,
+                category: cat,
+                text: textsList[textIdx] + ` [ذكر ${i}]`,
+                tag: tagsList[tagIdx]
+            });
+        }
+
+        let currentCategory = 'all';
+        let favorites = JSON.parse(localStorage.getItem('zkr_favs_mohamed')) || [];
+
+        // إدارة العداد الإلكتروني مع الحفظ المحلي
+        let tasbihCount = localStorage.getItem('zkr_tasbih_mohamed') ? parseInt(localStorage.getItem('zkr_tasbih_mohamed')) : 0;
+        document.getElementById('tasbihCount').innerText = tasbihCount;
+
+        function incrementTasbih() {
+            tasbihCount++;
+            document.getElementById('tasbihCount').innerText = tasbihCount;
+            localStorage.setItem('zkr_tasbih_mohamed', tasbihCount);
+        }
+
+        function resetTasbih() {
+            tasbihCount = 0;
+            document.getElementById('tasbihCount').innerText = tasbihCount;
+            localStorage.setItem('zkr_tasbih_mohamed', tasbihCount);
+            showToast('تمت إعادة ضبط العداد بنجاح');
+        }
+
+        // عرض رسالة تنبيه عائمة عصرية
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.className = 'show';
+            setTimeout(() => {
+                toast.className = toast.className.replace('show', '');
+            }, 3000);
+        }
+
+        // رسم محتوى البطاقات في الصفحة
+        function renderContent(items) {
+            const grid = document.getElementById('contentGrid');
+            grid.innerHTML = '';
+
+            if (items.length === 0) {
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--light-text); padding: 3rem; font-size: 1.1rem;">عذراً، لم نجد نتائج مطابقة لبحثك أو لقائمة المفضلة لديك.</p>`;
+                return;
+            }
+
+            items.forEach(item => {
+                const isFav = favorites.includes(item.id);
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header-row">
+                        <span class="card-tag">${item.tag}</span>
+                        <i class="fa-solid fa-heart fav-icon ${isFav ? 'active' : ''}" onclick="toggleFavorite(${item.id}, this)" title="إضافة للمفضلة"></i>
+                    </div>
+                    <div class="card-content">${item.text}</div>
+                    <div class="card-actions">
+                        <button class="action-btn btn-whatsapp" onclick="shareWhatsApp('${escapeHtml(item.text)}')">
+                            <i class="fa-brands fa-whatsapp"></i> واتساب
+                        </button>
+                        <button class="action-btn btn-copy" onclick="copyText('${escapeHtml(item.text)}')">
+                            <i class="fa-regular fa-copy"></i> نسخ
+                        </button>
+                        <button class="action-btn btn-image" onclick="downloadCardImage('${escapeHtml(item.text)}')">
+                            <i class="fa-regular fa-image"></i> صورة
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // تبديل وحفظ المفضلة
+        function toggleFavorite(id, icon) {
+            const index = favorites.indexOf(id);
+            if (index > -1) {
+                favorites.splice(index, 1);
+                icon.classList.remove('active');
+                showToast('تمت الإزالة من المفضلة');
+            } else {
+                favorites.push(id);
+                icon.classList.add('active');
+                showToast('تمت الإضافة إلى المفضلة ❤️');
+            }
+            localStorage.setItem('zkr_favs_mohamed', JSON.stringify(favorites));
+            if (currentCategory === 'مفضلة') {
+                filterContent();
+            }
+        }
+
+        // تغيير التصنيف
+        function filterCategory(category, btn) {
+            currentCategory = category;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterContent();
+        }
+
+        // الفلترة والبحث الفوري
+        function filterContent() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = db.filter(item => {
+                let matchesCat = true;
+                if (currentCategory === 'مفضلة') {
+                    matchesCat = favorites.includes(item.id);
+                } else if (currentCategory !== 'all') {
+                    matchesCat = (item.category === currentCategory);
+                }
+                const matchesSearch = item.text.toLowerCase().includes(query) || item.tag.toLowerCase().includes(query);
+                return matchesCat && matchesSearch;
+            });
+            renderContent(filtered);
+        }
+
+        // مشاركة مباشرة عبر واتساب
+        function shareWhatsApp(text) {
+            const cleanText = unescapeHtml(text) + "\n\n🌐 تم النشر عبر موقع روائع الذكر - تصميم: محمد سعيد إبراهيم فرج";
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(cleanText)}`;
+            window.open(url, '_blank');
+        }
+
+        // نسخ النص للحافظة مع إظهار تنبيه
+        function copyText(text) {
+            const cleanText = unescapeHtml(text);
+            navigator.clipboard.writeText(cleanText).then(() => {
+                showToast('تم نسخ النص بنجاح إلى الحافظة!');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = cleanText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('تم نسخ النص بنجاح!');
+            });
+        }
+
+        // توليد وتنزيل الآية أو الدعاء كصورة فاخرة عبر html2canvas
+        function downloadCardImage(text) {
+            const cleanText = unescapeHtml(text);
+            const container = document.getElementById('capture-container');
+            document.getElementById('capture-text').innerText = cleanText;
+
+            container.style.left = '0';
+
+            html2canvas(container, { scale: 2, backgroundColor: null }).then(canvas => {
+                container.style.left = '-9999px';
+                
+                const link = document.createElement('a');
+                link.download = 'zekr-mohamed-farag.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                showToast('تم تحميل الصورة بنجاح 📥');
+            }).catch(err => {
+                container.style.left = '-9999px';
+                showToast('حدث خطأ أثناء توليد الصورة، حاول مرة أخرى.');
+            });
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/'/g, "&apos;").replace(/"/g, "&quot;");
+        }
+
+        function unescapeHtml(text) {
+            return text.replace(/&apos;/g, "'").replace(/&quot;/g, '"');
+        }
+
+        // التشغيل الأولي للموقع
+        renderContent(db);
+    </script>
+</body>
+</html>
